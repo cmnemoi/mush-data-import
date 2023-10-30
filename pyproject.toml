@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "mush-import"
+version = "0.1.0"
+description = ""
+authors = ["Charles-Meldhine Madi Mnemoi <icdk5b4zf@relay.firefox.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11, <3.12"
+streamlit = "^1.28.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
