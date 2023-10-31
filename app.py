@@ -221,7 +221,7 @@ if __name__ == "__main__":
                     write_disposition="WRITE_APPEND",
                     source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
                 )
-                job = bq_client.load_table_from_json([user.model_dump_json()], table_id, job_config=job_config)
+                job = bq_client.load_table_from_json([user.model_dump()], table_id, job_config=job_config)
                 job.result()
             
             st.balloons()
