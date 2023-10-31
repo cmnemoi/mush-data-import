@@ -21,7 +21,7 @@ LANGUAGE_MUSH_SERVER_MAP = {
 }
 
 TUTO = f"""
-You can backup your original Mush account on eMush.
+You can backup your original Mush account with this app.
 
 Here is the list of items saved :
 - Your Twinoid username
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     st.title("Save Mush data")
 
     if "code" not in st.experimental_get_query_params():
-        st.info("You can save your Mush data with this app. Connect to Twinoid to proceed.")
+        st.info("You can backup your original Mush account with this app. Connect to Twinoid to proceed.")
 
     st.markdown(connect_to_twinoid, unsafe_allow_html=True)
     
