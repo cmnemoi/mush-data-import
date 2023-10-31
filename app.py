@@ -32,13 +32,7 @@ You can additionally save :
 - Your character levels
 - Your klix
 
-If you fill the "Cookie" field. For that you wll find below two links to copy your cookies : one for the French server and one for the English server.
-
-Save the link that interests you as a new bookmark (right-click and save the bookmark). 
-
-Next, go to the corresponding Mush site and log in to your account. Click on the bookmark saved previously while being logged into the Mush site.
-
-This will automatically save the cookie in your clipboard. Return to the eMush import page, and paste the cookie into the 'cookie' field below.
+If you fill the "Cookie" field. Please watch the video below to know how to get your cookie.
 
 You can only backup the profile from **one server**. Choose wisely! 
 
