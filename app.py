@@ -7,6 +7,7 @@ from google.oauth2.service_account import Credentials
 
 from links import *
 from models import *
+from texts import *
 
 GCP_SERVICE_ACCOUNT = st.secrets["gcp_service_account"]
 
@@ -19,29 +20,6 @@ LANGUAGE_MUSH_SERVER_MAP = {
     "French": "http://mush.vg",
     "English": "http://mush.twinoid.com",
 }
-
-TUTO = f"""
-You can backup your original Mush account with this app.
-
-Here is the list of items saved :
-- Your Twinoid username
-- Your achievements and titles
-- Your ships
-
-You can additionally save :
-- Your character levels
-- Your klix
-
-If you fill the "Cookie" field. Please watch the video below to know how to get your cookie.
-
-You can only backup the profile from **one server**. Choose wisely! 
-
-Do not leave the page during the profile import!
-
-It's possible to make as many imports as you want. Please use "Connect to Twinoid" link each time you want to import a new profile.
-
-If you have any questions or encounter issues, feel free to contact us on the [Eternaltwin Discord](https://discord.gg/Kd8DUkWy4N).
-"""
 
 def build_mush_api_me_uri(access_token: str, server: str, fields: str) -> str:
     return f"{server}/tid/graph/me?access_token={access_token}&fields={fields}"
@@ -146,24 +124,26 @@ def twinoid_api_me_fields() -> str:
     return "id, name, sites.fields(site.fields(name), stats.fields(id, score, name, description, rare), achievements.fields(id, name, stat, score, points, npoints, description, date))"
 
 if __name__ == "__main__":
-    st.title("Save Mush data")
+    language = st.selectbox("Langue / Language", ["French", "English"])
+
+    st.title(translate("title", language))
 
     if "code" not in st.experimental_get_query_params():
-        st.info("You can backup your original Mush account with this app. Connect to Twinoid to proceed.")
+        st.info(translate("intro", language))
 
-    st.markdown(connect_to_twinoid, unsafe_allow_html=True)
+    st.markdown(f"[{translate('connectToTwinoid', language)}]({connect_to_twinoid})", unsafe_allow_html=True)
     
     if "code" in st.experimental_get_query_params():
-        st.info(TUTO)
+        st.info(translate("tutorial", language))
         st.video(open("tutorial.mp4", "rb").read())
         st.components.v1.html(cookies, height=40)
         code = st.experimental_get_query_params()["code"][0]
-        profile_language_to_save = st.selectbox("Profile to save", ["French", "English"])
+        profile_language_to_save = st.selectbox(translate("profileToSave", language), ["French", "English"])
         sid = st.text_input("Cookie", "")
-        if st.button("Get my Twinoid data"):
+        if st.button(translate("getMyMushData", language)):
             access_token = get_twinoid_api_token(code)
             
-            with st.spinner("Getting your data..."):
+            with st.spinner(translate("gettingData", language)):
                 twinoid_data = get_twinoid_data(access_token)
                 mush_data = get_mush_data(access_token, profile_language_to_save, mush_api_me_fields())
                 scrapped_data = scrap_mush_profile(LANGUAGE_MUSH_SERVER_MAP[profile_language_to_save], sid)
@@ -180,9 +160,9 @@ if __name__ == "__main__":
                     character_levels=None if scrapped_data["character_levels"] is None else [MushUserCharacterLevel(name=name, level=level) for name, level in scrapped_data["character_levels"].items()],
                     klix=scrapped_data["klix"]
                 )
-                st.success("Data successfully retrieved!")
+                st.success(translate("dataRetrieved", language))
 
-            with st.spinner("Saving your data..."):
+            with st.spinner(translate("savingData", language)):
                 bq_client = bigquery.Client(project=GCP_SERVICE_ACCOUNT.project_id, credentials=Credentials.from_service_account_info(GCP_SERVICE_ACCOUNT))
                 table_id = GCP_SERVICE_ACCOUNT.table_id
                 job_config = bigquery.LoadJobConfig(
@@ -193,7 +173,7 @@ if __name__ == "__main__":
                 job.result()
             
             st.balloons()
-            st.success("Congratulations! Your profile has been successfully saved! Here is a preview of your data:")
+            st.success(translate("congratulations", language))
             st.write(user.model_dump())
 
             
