@@ -1,0 +1,1 @@
+connect_to_twinoid = "[Connect to Twinoid](" + "https://twinoid.com/oauth/auth?response_type=code&client_id=407&redirect_uri=http://localhost/&scope=mush.twinoid.com+mush.twinoid.es+mush_ship_data+mush.vg+groups&state=auth&access_type=offline" + ")"

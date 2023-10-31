@@ -1,18 +1,16 @@
-FROM python:3.11
+FROM python:3.11-slim
 
-ARG POETRY_VERSION=1.6.1
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd dev -g $GID && useradd dev -u $UID -g dev -d /home/dev -m
 
 WORKDIR /www
 
-RUN curl -sSL https://install.python-poetry.org | python3 - --version ${POETRY_VERSION}
+COPY . .
 
-COPY poetry.lock pyproject.toml ./
-
-ENV PATH="${PATH}:/root/.local/bin"
-
-RUN poetry config virtualenvs.create true \
-    && poetry install --no-dev --no-interaction --no-ansi
+RUN pip install -r requirements.txt
 
 EXPOSE 80
 
-CMD ["poetry", "run", "streamlit", "run", "app.py", "--server.port", "80"]
+CMD ["streamlit", "run", "app.py", "--server.port", "80"]

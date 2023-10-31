@@ -9,6 +9,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.11, <3.12"
 streamlit = "^1.28.0"
+pydantic = "^2.4.2"
+beautifulsoup4 = "^4.12.2"
+google-cloud-bigquery = "^3.13.0"
 
 [build-system]
 requires = ["poetry-core"]

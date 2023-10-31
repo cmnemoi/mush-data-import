@@ -1,7 +1,7 @@
 all: install run
 
-install: setup-env-variables
-	poetry install
+build:
+	docker build -t mush-import-app:latest .
 
 docker-build:
 	docker build -t mush-import-app:latest .
@@ -12,7 +12,7 @@ docker-remove: docker-stop
 docker-run:
 	docker run \
 	--name mush-import-app \
-	--publish 80:8501 \
+	--publish 80:80 \
 	--volume .:/www \
 	mush-import-app:latest
 
@@ -21,6 +21,9 @@ docker-start:
 
 docker-stop:
 	docker stop mush-import-app
+
+install: setup-env-variables
+	poetry install
 
 run: run-app
 
