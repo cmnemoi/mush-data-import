@@ -2,7 +2,7 @@ import requests
 import streamlit as st
 
 from bs4 import BeautifulSoup
-from google.cloud import bigquery
+from google.cloud import bigquery, storage
 from google.oauth2.service_account import Credentials
 
 from links import *
@@ -42,7 +42,7 @@ def get_mush_data(access_token: str, language: str, fields: str) -> list:
     json_response = response.json()
     if "error" in json_response:
         error = json_response["error"]
-        raise Exception(f"Error getting Mush data: {error}")
+        st.error(f"Error getting Mush data: {error}")
     
     return response.json()
 
@@ -64,7 +64,7 @@ def get_twinoid_api_token(code: str) -> str:
     json_response = response.json()
     if "error" in json_response:
         error = json_response["error"]
-        raise Exception(f"Error getting Twinoid API token: {error}")
+        st.error(f"Error getting Twinoid API token: {error}")
 
     return response.json()["access_token"]
 
@@ -221,9 +221,17 @@ if __name__ == "__main__":
                     write_disposition="WRITE_APPEND",
                     source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
                 )
-                job = bq_client.load_table_from_json([user.model_dump()], table_id, job_config=job_config)
-                job.result()
-            
+                try:
+                    job = bq_client.load_table_from_json([user.model_dump()], table_id, job_config=job_config)
+                    job.result() 
+                except Exception as e:         
+                    st.warning(f"Could not save user in database: {e}. Will save it in a bucket still.")
+                       
+                cs_client = storage.Client(project=GCP_SERVICE_ACCOUNT.project_id, credentials=Credentials.from_service_account_info(GCP_SERVICE_ACCOUNT))
+                bucket = cs_client.bucket(GCP_SERVICE_ACCOUNT.bucket_name)
+                blob = bucket.blob(f"{user.twinoid_username}_{user.twinoid_id}.json")
+                blob.upload_from_string(user.model_dump_json(indent=4))
+                     
             st.balloons()
             st.success(translate("congratulations", language))
             st.write(user.model_dump())

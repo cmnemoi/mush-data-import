@@ -137,6 +137,9 @@ google-cloud-bigquery==3.13.0 ; python_version >= "3.11" and python_version < "3
 google-cloud-core==2.3.3 ; python_version >= "3.11" and python_version < "3.12" \
     --hash=sha256:37b80273c8d7eee1ae816b3a20ae43585ea50506cb0e60f3cf5be5f87f1373cb \
     --hash=sha256:fbd11cad3e98a7e5b0343dc07cb1039a5ffd7a5bb96e1f1e27cee4bda4a90863
+google-cloud-storage==2.12.0 ; python_version >= "3.11" and python_version < "3.12" \
+    --hash=sha256:57c0bcda2f5e11f008a155d8636d8381d5abab46b58e0cae0e46dd5e595e6b46 \
+    --hash=sha256:bc52563439d42981b6e21b071a76da2791672776eda3ba99d13a8061ebbd6e5e
 google-crc32c==1.5.0 ; python_version >= "3.11" and python_version < "3.12" \
     --hash=sha256:024894d9d3cfbc5943f8f230e23950cd4906b2fe004c72e29b209420a1e6b05a \
     --hash=sha256:02c65b9817512edc6a4ae7c7e987fea799d2e0ee40c53ec573a692bee24de876 \
