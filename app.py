@@ -43,6 +43,7 @@ def get_mush_data(access_token: str, language: str, fields: str) -> list:
     if "error" in json_response:
         error = json_response["error"]
         st.error(f"Error getting Mush data: {error}")
+        st.stop()
     
     return response.json()
 
@@ -65,6 +66,7 @@ def get_twinoid_api_token(code: str) -> str:
     if "error" in json_response:
         error = json_response["error"]
         st.error(f"Error getting Twinoid API token: {error}")
+        st.stop() 
 
     return response.json()["access_token"]
 
