@@ -80,7 +80,11 @@ def create_cookie_from_server_and_sid(server_url: str, sid: str) -> dict:
     
     return {"mush_sid": sid}
 
-def scrap_mush_profile(server_url: str, sid: str) -> dict:
+def scrap_mush_profile(server_url: str, sid: Optional[str]) -> dict:
+    if sid is None:
+        st.info("No cookie given. Skipping Mush profile scraping.")
+        return {}
+    
     cookie = create_cookie_from_server_and_sid(server_url, sid)
     htmlContent = requests.get(f"{server_url}/me", cookies=cookie).content
     soup = BeautifulSoup(htmlContent, "html.parser")
