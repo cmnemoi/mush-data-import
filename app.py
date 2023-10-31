@@ -66,6 +66,8 @@ def get_twinoid_api_token(code: str) -> str:
     if "error" in json_response:
         error = json_response["error"]
         st.error(f"Error getting Twinoid API token: {error}")
+        if error == "invalid_grant":
+            st.error(translate("tokenExpired", language))
         st.stop() 
 
     return response.json()["access_token"]

@@ -35,6 +35,10 @@ TEXTS = {
         "English": "Congratulations! Your profile has been successfully saved! Here is a preview of your data:",
         "Français": "Félicitations ! Votre profil a été sauvegardé avec succès ! Voici un aperçu de vos données :"
     },
+    "tokenExpired": {
+        "English": "Your session has expired. Please reconnect to Twinoid.",
+        "Français": "Votre session a expiré. Veuillez vous reconnecter à Twinoid."
+    },
     "tutorial": {
         "English": """You can backup your Mush account with this app.
 
