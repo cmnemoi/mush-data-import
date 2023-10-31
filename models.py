@@ -26,7 +26,7 @@ class TwinoidUserAchievement(BaseModel):
 
 class MushSeason(BaseModel):
     desc: str
-    picto: str
+    picto: Optional[str] = None
     options: List[str]
     id: int
     start: str
