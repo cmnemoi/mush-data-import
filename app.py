@@ -41,8 +41,9 @@ def get_mush_data(access_token: str, language: str, fields: str) -> list:
     response = requests.get(url)
     json_response = response.json()
     if "error" in json_response:
-        raise Exception("Error getting Mush data: " + json_response["error"])
-
+        error = json_response["error"]
+        raise Exception(f"Error getting Mush data: {error}")
+    
     return response.json()
 
 def get_twinoid_oauth_link() -> str:
@@ -62,7 +63,8 @@ def get_twinoid_api_token(code: str) -> str:
     response = requests.post(url)
     json_response = response.json()
     if "error" in json_response:
-        raise Exception("Error getting Twinoid API token: " + json_response["error"])
+        error = json_response["error"]
+        raise Exception(f"Error getting Twinoid API token: {error}")
 
     return response.json()["access_token"]
 
