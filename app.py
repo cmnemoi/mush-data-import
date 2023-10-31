@@ -161,6 +161,7 @@ if __name__ == "__main__":
     
     if "code" in st.experimental_get_query_params():
         st.info(TUTO)
+        st.video(open("tutorial.mp4", "rb").read())
         st.components.v1.html(cookies, height=40)
         code = st.experimental_get_query_params()["code"][0]
         profile_language_to_save = st.selectbox("Profile to save", ["French", "English"])
