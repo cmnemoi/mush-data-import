@@ -91,10 +91,12 @@ def scrap_mush_profile(server_url: str, sid: Optional[str]) -> dict:
 
     return {
         "character_levels": scrap_character_levels(soup),
-        "klix": scrap_klix(soup)
+        "klix": scrap_klix(soup),
+        "skins": scrap_skins(soup),
+        "flairs": scrap_flairs(soup),
     }
 
-def scrap_character_levels(soup) -> Optional[Dict]:
+def scrap_character_levels(soup: BeautifulSoup) -> Optional[Dict]:
     character_level_divs = soup.find_all("div", {"class": "level"})
     if len(character_level_divs) == 0:
         st.error("Could not find your character levels")
@@ -106,7 +108,7 @@ def scrap_character_levels(soup) -> Optional[Dict]:
 
     return character_levels
 
-def scrap_klix(soup) -> Optional[int]:
+def scrap_klix(soup: BeautifulSoup) -> Optional[int]:
     klix_img = soup.find("img", {"class": "klix"})
     if klix_img is None:
         st.error("Could not find your klix")
@@ -116,6 +118,52 @@ def scrap_klix(soup) -> Optional[int]:
     klix = int("".join(filter(str.isdigit, klix_str)))
 
     return klix
+
+def scrap_skins(soup: BeautifulSoup) -> Optional[List[str]]:
+    style_to_skin_map = {
+        'background-position : 0px 	-1512px !important;': 'jin_su_gangnam_style',
+        'background-position : 0px 	-1604px !important;': 'jin_su_vampire',
+        'background-position : 0px 	-2063px !important;': 'frieda',
+        'background-position : 0px 	-1875px !important;': 'kuan_ti',
+        'background-position : 0px 	-1185px !important;': 'janice',
+        'background-position : 0px 	-1056px !important;': 'roland',
+        'background-position : 0px 	-1554px !important;': 'hua',
+        'background-position : 0px 	-1728px !important;': 'paola',
+        'background-position : 0px 	-1282px !important;': 'chao',
+        'background-position : 0px 	-1921px !important;': 'finola',
+        'background-position : 0px 	-1681px !important;': 'stephen',
+        'background-position : 0px 	-1233px !important;': 'ian',
+        'background-position : 0px 	-2017px !important;': 'chun',
+        'background-position : 0px 	-1391px !important;': 'raluca',
+        'background-position : 0px 	-1970px !important;': 'gioele',
+        'background-position : 0px 	-1335px !important;': 'eleesha',
+        'background-position : 0px 	-1444px !important;': 'terrence',
+    }
+
+    skin_divs = soup.find_all("div", {"class": "inl-blck"})
+    if len(skin_divs) == 0:
+        st.info('No skins found')
+        return None
+    
+    skins = []
+    for skin_div in skin_divs:
+        skin_style = skin_div.attrs.get("style")
+        if not skin_style is None:
+            skin = style_to_skin_map.get(skin_style)
+            if not skin is None:
+                skins.append(skin)
+
+    return skins
+
+def scrap_flairs(soup: BeautifulSoup) -> Optional[List[str]]:
+    flair_inputs = soup.find_all("input", {"onclick": " return Main.onClickVanity( $(this) ); "})
+    if len(flair_inputs) == 0:
+        st.info('No flairs found')
+        return None
+    
+    flairs = [flair_input.parent.text.split("Activer :")[-1].strip() for flair_input in flair_inputs]
+
+    return flairs
 
 def mush_api_me_fields() -> str:
     return "creationDate,id,xp,historyHeroes.fields(id,date,deathCycle,deathId,deathLocation,epitaph,group,heroId,log,rank,season,shipId,skillList,triumph,user,wasMush),historyShips.fields(conf,counter_all_spore,counter_explo,counter_hunter_dead,counter_mushes,counter_planet_scanned,counter_projects,counter_rebel_bases,counter_research,creationDate,deathCycle,destructionDate,group.fields(avatar,banner,creation,desc,domain,id,invests,name,resultDesc,triumphRemap,xp),id,pilgredDone,projects,researches,season.fields(desc,id,options,picto,publicName,start),shipId,triumphRemap)"
@@ -158,7 +206,9 @@ if __name__ == "__main__":
                     history_heroes=[MushUserHistoryHero.from_history_hero_data(history_hero) for history_hero in mush_data["historyHeroes"]],
                     history_ships=[MushUserHistoryShip(**history_ship) for history_ship in mush_data["historyShips"]],
                     character_levels=None if scrapped_data["character_levels"] is None else [MushUserCharacterLevel(name=name, level=level) for name, level in scrapped_data["character_levels"].items()],
-                    klix=scrapped_data["klix"]
+                    klix=scrapped_data["klix"],
+                    skins=scrapped_data["skins"],
+                    flairs=scrapped_data["flairs"],
                 )
                 st.success(translate("dataRetrieved", language))
 

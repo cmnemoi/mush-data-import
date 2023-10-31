@@ -109,3 +109,5 @@ class LegacyUser(BaseModel):
     available_experience: int
     character_levels: Optional[List[MushUserCharacterLevel]] = None
     klix: Optional[int] = None
+    skins: Optional[List[str]] = None
+    flairs: Optional[List[str]] = None

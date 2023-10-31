@@ -46,6 +46,8 @@ Here is the list of items saved :
 You can additionally save :
 - Your character levels
 - Your klix
+- Your skins
+- Your flairs
 
 If you fill the "Cookie" field. Please watch the video below to know how to get your cookie.
 
@@ -60,12 +62,14 @@ If you have any question or encounter issues, feel free to contact us on the [Et
 
 Voici la liste des éléments sauvegardés :
 - Votre nom d'utilisateur Twinoid
-- Vos réalisations et titres
+- Vos succès et titres
 - Vos vaisseaux
 
 Vous pouvez également sauvegarder :
 - Les niveaux de votre personnage
 - Vos klix
+- Vos skins
+- Vos vanités
 
 Si vous remplissez le champ "Cookie". Veuillez regarder la vidéo ci-dessous pour savoir comment obtenir votre cookie.
 
