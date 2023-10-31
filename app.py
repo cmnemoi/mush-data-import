@@ -124,7 +124,7 @@ def twinoid_api_me_fields() -> str:
     return "id, name, sites.fields(site.fields(name), stats.fields(id, score, name, description, rare), achievements.fields(id, name, stat, score, points, npoints, description, date))"
 
 if __name__ == "__main__":
-    language = st.selectbox("Langue / Language", ["French", "English"])
+    language = st.selectbox("Langue / Language", ["Français", "English"])
 
     st.title(translate("title", language))
 
