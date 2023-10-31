@@ -8,7 +8,6 @@ from google.oauth2.service_account import Credentials
 from links import *
 from models import *
 
-
 GCP_SERVICE_ACCOUNT = st.secrets["gcp_service_account"]
 
 LANGUAGE_SITE_MAP = {
@@ -20,6 +19,29 @@ LANGUAGE_MUSH_SERVER_MAP = {
     "French": "http://mush.vg",
     "English": "http://mush.twinoid.com",
 }
+
+TUTO = f"""
+You can backup your original Mush account on eMush.
+
+Here is the list of items saved :
+- Your Twinoid username
+- Your achievements and titles
+- Your ships
+
+You can additionally save :
+- Your character levels
+- Your klix
+
+If you fill the "Cookie" field. Please contact us on the [Eternaltwin Discord](https://discord.gg/Kd8DUkWy4N) or Evian on Twinoid to get help with this.
+
+You can only backup the profile from **one server**. Choose wisely!
+
+Do not leave the page during the profile import!
+
+It's possible to make as many imports as you want. Please use "Connect to Twinoid" link each time you want to import a new profile.
+
+If you have any questions or encounter issues, feel free to contact us on the [Eternaltwin Discord](https://discord.gg/Kd8DUkWy4N).
+"""
 
 def build_mush_api_me_uri(access_token: str, server: str, fields: str) -> str:
     return f"{server}/tid/graph/me?access_token={access_token}&fields={fields}"
@@ -132,7 +154,7 @@ if __name__ == "__main__":
     st.markdown(connect_to_twinoid, unsafe_allow_html=True)
     
     if "code" in st.experimental_get_query_params():
-        st.info("You are connected to Twinoid! You can now save your Mush data.")
+        st.info(TUTO)
         code = st.experimental_get_query_params()["code"][0]
         profile_language_to_save = st.selectbox("Profile to save", ["French", "English"])
         sid = st.text_input("Cookie", "")
