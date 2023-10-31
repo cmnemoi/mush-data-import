@@ -180,8 +180,7 @@ if __name__ == "__main__":
 
     if "code" not in st.experimental_get_query_params():
         st.info(translate("intro", language))
-
-    st.markdown(f"[{translate('connectToTwinoid', language)}]({connect_to_twinoid})", unsafe_allow_html=True)
+        st.markdown(f"[{translate('connectToTwinoid', language)}]({connect_to_twinoid})", unsafe_allow_html=True)
     
     if "code" in st.experimental_get_query_params():
         st.info(translate("tutorial", language))
@@ -190,6 +189,7 @@ if __name__ == "__main__":
         code = st.experimental_get_query_params()["code"][0]
         profile_language_to_save = st.selectbox(translate("profileToSave", language), ["French", "English"])
         sid = st.text_input("Cookie", "")
+        st.markdown(f"[{translate('connectToTwinoid', language)}]({connect_to_twinoid})", unsafe_allow_html=True)
         if st.button(translate("getMyMushData", language)):
             access_token = get_twinoid_api_token(code)
             
@@ -221,7 +221,7 @@ if __name__ == "__main__":
                     write_disposition="WRITE_APPEND",
                     source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
                 )
-                job = bq_client.load_table_from_json([user.model_dump()], table_id, job_config=job_config)
+                job = bq_client.load_table_from_json([user.model_dump_json()], table_id, job_config=job_config)
                 job.result()
             
             st.balloons()
