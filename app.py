@@ -192,7 +192,7 @@ if __name__ == "__main__":
         st.components.v1.html(cookies, height=40)
         code = st.experimental_get_query_params()["code"][0]
         profile_language_to_save = st.selectbox(translate("profileToSave", language), ["French", "English"])
-        sid = st.text_input("Cookie", "")
+        sid = st.text_input("Cookie", "", type="password")
         st.markdown(f"[{translate('connectToTwinoid', language)}]({connect_to_twinoid})", unsafe_allow_html=True)
         if st.button(translate("getMyMushData", language)):
             access_token = get_twinoid_api_token(code)
