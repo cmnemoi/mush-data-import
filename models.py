@@ -99,7 +99,7 @@ class MushUserCharacterLevel(BaseModel):
     level: int
 
 class LegacyUser(BaseModel):
-    id: UUID = Field(default_factory=str_uuid4)
+    id: str = Field(default_factory=str_uuid4)
     twinoid_id: int
     twinoid_username: str
     stats: List[TwinoidUserStat]
