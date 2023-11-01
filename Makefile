@@ -1,7 +1,7 @@
 all: install run
 
-build:
-	docker build -t mush-import-app:latest .
+docker-bash:
+	docker exec -it mush-import-app bash
 
 docker-build:
 	docker build -t mush-import-app:latest .
@@ -14,6 +14,8 @@ docker-run:
 	--name mush-import-app \
 	--publish 80:80 \
 	--volume .:/www \
+	--add-host mush.twinoid.es:178.32.123.64 \
+	--add-host data.mush.twinoid.es:178.32.123.64 \
 	mush-import-app:latest
 
 docker-start:
@@ -25,12 +27,7 @@ docker-stop:
 install: setup-env-variables
 	poetry install
 
-run: run-app
-
-run-api:
-	poetry run uvicorn api:api --reload
-
-run-app:
+run:
 	poetry run streamlit run app.py
 
 setup-env-variables:
