@@ -104,9 +104,9 @@ class LegacyUser(BaseModel):
     twinoid_username: str
     stats: List[TwinoidUserStat]
     achievements: List[TwinoidUserAchievement]
-    history_ships: List[MushUserHistoryShip]
-    history_heroes: List[MushUserHistoryHero]
-    available_experience: int
+    history_ships: Optional[List[MushUserHistoryShip]] = None
+    history_heroes: Optional[List[MushUserHistoryHero]] = None
+    available_experience: Optional[int] = None
     character_levels: Optional[List[MushUserCharacterLevel]] = None
     klix: Optional[int] = None
     skins: Optional[List[str]] = None
