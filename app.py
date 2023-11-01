@@ -39,7 +39,7 @@ def build_twinoid_api_token_url(code: str) -> str:
     return url
 
 def get_mush_data(access_token: str, language: str, fields: str) -> Optional[dict]:
-    if language == "Spanish": # todo add env var to allow if the app runs on Cloud run
+    if language == "Spanish":
         st.warning("Spanish profiles are not supported. Skipping fetching Mush API data.")
         return None
     
@@ -87,7 +87,7 @@ def get_twinoid_data(access_token: str) -> dict:
     return response.json()
 
 def create_cookie_from_server_and_sid(server_url: str, sid: str) -> dict:
-    if server_url == "http://mush.twionid.com":
+    if server_url == "http://mush.twinoid.com":
         return {"mush_sid": sid}
     
     return {"sid": sid}
@@ -96,7 +96,7 @@ def scrap_mush_profile(server_url: str, sid: Optional[str]) -> Optional[dict]:
     if sid is None:
         st.info("No cookie given. Skipping Mush profile scraping.")
         return None
-    if server_url == "http://mush.twinoid.es": # todo add env var to allow if the app runs on Cloud run
+    if server_url == "http://mush.twinoid.es":
         st.warning("Spanish profiles are not supported. Skipping Mush profile scraping.")
         return None
     

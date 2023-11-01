@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 80
 
-CMD ["streamlit", "run", "app.py", "--server.port", "80"]
+ENTRYPOINT [ "/bin/sh", "-c" , "echo 178.32.123.64 mush.twinoid.es >> /etc/hosts && echo 178.32.123.64 http://mush.twinoid.es >> /etc/hosts && echo 178.32.123.64 data.mush.twinoid.es >> /etc/hosts && exec streamlit run app.py --server.port 80" ]
