@@ -9,7 +9,7 @@ WORKDIR /www
 
 COPY . .
 
-COPY secrets.cr.toml .streamlit/secrets.toml
+COPY .streamlit/secrets.cr.toml .streamlit/secrets.toml
 
 RUN pip install -r requirements.txt
 
