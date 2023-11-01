@@ -1,0 +1,18 @@
+FROM python:3.11-slim
+
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd dev -g $GID && useradd dev -u $UID -g dev -d /home/dev -m
+
+WORKDIR /www
+
+COPY . .
+
+COPY secrets.cr.toml .streamlit/secrets.toml
+
+RUN pip install -r requirements.txt
+
+EXPOSE 80
+
+ENTRYPOINT [ "/bin/sh", "-c" , "echo 178.32.123.64 mush.twinoid.es >> /etc/hosts && echo 178.32.123.64 http://mush.twinoid.es >> /etc/hosts && echo 178.32.123.64 data.mush.twinoid.es >> /etc/hosts && exec streamlit run app.py --server.port 80" ]
