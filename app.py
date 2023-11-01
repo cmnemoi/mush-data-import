@@ -181,7 +181,7 @@ def scrap_flairs(soup: BeautifulSoup) -> Optional[List[str]]:
     return flairs
 
 def mush_api_me_fields() -> str:
-    return "creationDate,id,xp,historyHeroes.fields(id,date,deathCycle,deathId,deathLocation,epitaph,group,heroId,log,rank,season,shipId,skillList,triumph,user,wasMush),historyShips.fields(conf,counter_all_spore,counter_explo,counter_hunter_dead,counter_mushes,counter_planet_scanned,counter_projects,counter_rebel_bases,counter_research,creationDate,deathCycle,destructionDate,group.fields(avatar,banner,creation,desc,domain,id,invests,name,resultDesc,triumphRemap,xp),id,pilgredDone,projects,researches,season.fields(desc,id,options,picto,publicName,start),shipId,triumphRemap)"
+    return "creationDate,id,xp,historyHeroes.fields(id,charId,date,deathCycle,deathId,deathLocation,epitaph,group,heroId,log,rank,season,shipId,skillList,triumph,user,wasMush),historyShips.fields(conf,counter_all_spore,counter_explo,counter_hunter_dead,counter_mushes,counter_planet_scanned,counter_projects,counter_rebel_bases,counter_research,creationDate,deathCycle,destructionDate,group.fields(avatar,banner,creation,desc,domain,id,invests,name,resultDesc,triumphRemap,xp),id,pilgredDone,projects,researches,season.fields(desc,id,options,picto,publicName,start),shipId,triumphRemap)"
 
 def twinoid_api_me_fields() -> str:
     return "id, name, sites.fields(site.fields(name), stats.fields(id, score, name, description, rare), achievements.fields(id, name, stat, score, points, npoints, description, date))"
